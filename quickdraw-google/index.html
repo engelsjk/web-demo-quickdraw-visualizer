@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Quick, Draw!</title>
+
+  <!-- Third party libs -->
+  <script type="text/javascript" src="/static/third_party/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/static/third_party/underscore/underscore-min.js"></script>
+  <script type="text/javascript" src="/static/third_party/paperjs-v0.9.25/dist/paper-core.min.js"></script>
+  <script type="text/javascript" src="/static/third_party/es6-promise/es6-promise.auto.min.js"></script>
+
+  <link href='https://fonts.googleapis.com/css?family=Karla:700,400|Roboto+Mono:400,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="/static/css/main.529e66429b0ad0c14c9707ea720419ca.css">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="/static/favicon-152.png">
+  <link rel="shortcut icon" sizes="196x196" href="/static/favicon-196.png">
+
+  <meta charset=utf-8>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+  <meta name="fb:app_id" content="1657991857848712" />
+
+  
+
+  <meta property="og:title" content="Quick, Draw!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://quickdraw.withgoogle.com/" />
+  <meta property="og:image" content="https://quickdraw.withgoogle.com/static/shareimg.png" />
+  <meta property="og:description" content="Can a neural network learn to recognize doodles? See how well it does with your drawings and help teach it, just by playing." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@google" />
+  <meta name="twitter:title" content="Quick, Draw!" />
+  <meta name="twitter:description" content="Can a neural network learn to recognize doodles? <br>See how well it does with your drawings and help teach it, just by playing." />
+  <meta name="twitter:image" content="https://quickdraw.withgoogle.com/static/shareimg.png" />
+
+  <meta itemprop="name" content="Quick, Draw!">
+  <meta itemprop="description" content="Can a neural network learn to recognize doodles? See how well it does with your drawings and help teach it, just by playing.">
+  <meta itemprop="image" content="/static/shareimg.png">
+
+  
+
+  <link rel="manifest" href="/static/manifest.json">
+</head>
+<body>
+<div id="content-wrapper">
+  
+
+<audio src="static/audio/click.mp3" preload="auto" id="beep"></audio>
+
+<div id="splashview">
+    <div id="splashview-hero"></div>
+
+    <div id="splashview-tagline" class="handwritten" >
+        Can a neural network learn to recognize doodles?
+        <br>See how well it does with your drawings and help teach it, just by playing.
+    </div>
+
+    <div class="splashscreen-button">
+        <button id="button-play" class="button button-large button-yellow">
+            <span class="center">Let's Draw!</span>
+        </button>
+    </div>
+
+    <div class="ui bl">
+        <a href="//aiexperiments.withgoogle.com"><div class="corp-logo"></div></a>
+    </div>
+    <div class="ui br" id="privacy-link">
+        <a href="//www.google.com/intl/en_us/policies/privacy/">Privacy</a> &
+        <a href="//www.google.com/intl/en_us/policies/terms/">Terms</a>
+    </div>
+    <div class="ui tl">
+        <button id="button-about" class="button button-pink"><span>?</span></button>
+    </div>
+    <div class="ui tr" id="splashscreen-share">
+        <button id="share_twitter" class="button button-twitter"></button>
+        <button id="share_facebook" class="button button-facebook"></button>
+        <button id="share_g" class="button button-g"></button>
+    </div>
+</div>
+
+
+<div id="gameview">
+    <div class="topbar">
+        <div id="topbar-text">Draw:</div>
+        <div id="clock" class="text-blink">
+            <div id="clock-time">00:20</div>
+        </div>
+        <div id="topbar-buttons">
+            <button class="button button-gray " id="button-clear">
+                <span class="icon icon-undo"></span>
+            </button>
+            <button class="button button-gray " id="button-skip">
+                <span class="icon icon-skip"></span>
+            </button>
+            <button class="button button-close">
+            </button>
+        </div>
+    </div>
+
+    <div id="speechbubble-wrapper">
+        <div id="machine-speechbubble">
+            <div id="machine-speechbubble-secondary"></div>
+            <div id="machine-speechbubble-primary">...</div>
+        </div>
+        <div id="machine-speechbubble-tip"></div>
+    </div>
+
+    <canvas id="drawingCanvas" resize="true"></canvas>
+</div>
+
+<div class="cards">
+    <!-- NEW ROUND -->
+<div id="newround-card" class="covercard">
+    <div class="card-container fill">
+        <div class="card-headline" id="challengetext-level" ></div>
+
+        <div class="card-row">
+            <div class="card-text">
+                <div id="newround-skipped" class="handwritten">Try this one instead!<br>-</div>
+                <div id="newround-timesup" class="handwritten">Times up, try this one instead<br>-</div>
+                <div id="newround-completed" class="handwritten">Great job!<br>-</div>
+                <div id="newround-default" class="handwritten">Draw</div>
+                <div id="challengetext-word" ></div>
+                <div id="time-text" class="handwritten">in under 20 seconds</div>
+
+                <button id="button-newround-play" class="button button-large button-green"><span class="center">Got It!</span></button>
+
+            </div>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+    <!--<div class="peek-button" id="peek-button-card"></div>-->
+</div>
+
+<!-- TIMES UP -->
+<div id="timesup-card" class="covercard">
+    <div class="card-container fill">
+        <div class="card-headline ">
+            <div id="timesup-title"></div>
+        </div>
+        <div class="card-row">
+            <div class="card-text" id="timesup-subtitle"></div>
+        </div>
+        <div class="card-row">
+            <div id="timesup-drawings-wrapper"></div>
+        </div>
+        <div class="card-row" id="portfolio">
+            <div class="card-text">
+                <div id="portfolio-text">Share your drawings</div>
+                <div>
+                    <button id="share_portfolio_twitter" class="button button-twitter"></button>
+                    <button id="share_portfolio_facebook" class="button button-facebook"></button>
+                    <button id="share_portfolio_g" class="button button-g"></button>
+                </div>
+                <button id="button-timesup-play" class="button button-large button-green"><span class="center">Play Again</span></button>
+            </div>
+
+        </div>
+
+        <div class="card-footer"></div>
+
+    </div>
+    <div class="ui tr">
+        <button class="button button-close"></button>
+    </div>
+</div>
+
+
+<!-- ROUND DETAIL-->
+<div id="round-detail-card" class="covercard">
+    <div class="card-container scroll">
+        <div class="card-headline dynamic-headline-position">
+            <div class="round-details-title"><span class="handwritten">You were asked to draw</span> <span id="round-details-word">bicycle</span></div>
+        </div>
+
+        <div class="card-row">
+            <div class="round-details-text card-text" id="round-details-subtitle-not-recognized">You drew this, and the neural net didn't recognize it.</div>
+            <div class="round-details-text card-text" id="round-details-subtitle-recognized">You drew this, and the neural net recognized it.</div>
+            <div id="round-drawing-wrapper">
+                <div id="round-drawing">
+                    <div class="round-drawing drawing"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-row gallery-line" id="round-neighbors-line">
+            <div class="card-text"></div>
+        </div>
+
+        <div class="card-row" id="round-neighbors">
+            <div class="round-details-text card-text" id="round-details-recognized">It also thought your drawing looked like these:</div>
+            <div class="round-details-text card-text" id="round-details-not-recognized">It thought your drawing looked more like these:</div>
+
+            <div id="round-detail-wrapper">
+                <div id="round-detail-1">
+                    <div class="round-detail-score">Correct match</div>
+                    <div class="round-detail-word">Bicycle</div>
+                    <div class="round-detail-image-neighbor"></div>
+                    <div class="round-detail-image drawing"></div>
+                </div>
+                <div id="round-detail-2">
+                    <div class="round-detail-score">2<sup>ND</sup> closest match</div>
+                    <div class="round-detail-word">Bicycle</div>
+                    <div class="round-detail-image-neighbor"></div>
+                    <div class="round-detail-image drawing"></div>
+                </div>
+                <div id="round-detail-3">
+                    <div class="round-detail-score">3<sup>RD</sup> closest match</div>
+                    <div class="round-detail-word">Bicycle</div>
+                    <div class="round-detail-image-neighbor"></div>
+                    <div class="round-detail-image drawing"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-row gallery-line" id="round-gallery-line">
+            <div class="card-text"></div>
+        </div>
+
+
+        <div class="card-row" id="round-gallery">
+            <div class="card-text">
+                <div id="gallery-title"></div>
+            </div>
+        </div>
+
+        <div class="card-row">
+            <div id="gallery-wrapper">
+            </div>
+        </div>
+        <div class="card-footer"></div>
+
+
+    </div>
+    <div class="ui tl">
+        <button id="button-back" class="button button-medium button-gray">
+            <span class="icon icon-back"></span>
+            <span> Back</span>
+        </button>
+    </div>
+</div>
+
+
+
+
+<!-- ABOUT  -->
+<div id="about-card" class="covercard">
+    <div class="card-container fill">
+        <div class="card-row">
+            <div class="card-headline handwritten">
+                About this game
+            </div>
+
+            <div id="about-card-text" class="card-text">
+                <p>
+                    This is a game built with machine learning. You draw, and a neural network tries to guess what you’re drawing.
+                    Of course, it doesn’t always work. But the more you play with it, the more it will learn.
+                    So far we have trained it on a few hundred concepts, and we hope to add more over time.
+                    We made this as an example of how you can use machine learning in fun ways.
+                    Watch the video below to learn about how it works, and <a href="https://aiexperiments.withgoogle.com/">check out more A.I. Experiments here.</a>
+                </p>
+                <p>
+                    <div id="about-video"><iframe src="https://www.youtube.com/embed/X8v1GWzZYJ4" frameborder="0" allowfullscreen></iframe></div>
+                </p>
+                <p>
+                    Built by Jonas Jongejan, Henry Rowley, Takashi Kawashima, Jongmin Kim, Nick Fox-Gieg, with friends at Google Creative Lab and Data Arts Team.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="ui tr">
+        <button class="button button-close"></button>
+    </div>
+</div>
+</div>
+
+<div class="popup-wrapper hidden-on-startup" id="popup-quit">
+    <div class="popup-box">
+        <div class="popup-text handwritten">Are you sure you want to quit?</div>
+        <div class="popup-buttons">
+            <button class="button button-large button-yellow" id="popup-quit-cancel"><span class="center">Cancel</span></button>
+            <button  class="button button-large button-yellow" id="popup-quit-quit"><span  class="center">Quit</span></button>
+        </div>
+    </div>
+</div>
+
+<div class="popup-wrapper hidden-on-startup" id="popup-error">
+    <div class="popup-box">
+        <div class="popup-text" id="popup-error-text"></div>
+        <div class="popup-buttons">
+            <button class="button button-large button-yellow" id="popup-error-button"><span class="center"></span></button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="static/js/script.386e96664d7f3ff8a65f35fd7a1ccdfc.js"></script>
+
+</div>
+</body>
+</html>

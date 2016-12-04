@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Quickdraw Visualizer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="css/w3.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+  <button class="w3-btn w3-ripple w3-red" id="btnClear" onclick="clearDrawing()">clear</button>
+  <div id="wrapper">
+    <canvas id="canvas" resize></canvas>
+    <br>
+    <div id="plot"></div>
+  </div>
+
+  <!-- Trigger/Open The Modal -->
+  <button class="w3-btn w3-ripple w3-green" id="btnInfo">?</button>
+
+  <!-- The Modal -->
+  <div id="info" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span class="close">x</span>
+      <h1>Google AI Quickdraw Visualizer</h1>
+      <ul>
+        <li>Draw an object in the top panel.</li>
+        <li>See if Google AI can guess what you're drawing.</li>
+        <li>Check out the relative scores of possible matches each time Google AI makes a Guess.</li>
+        <li>The Guess Score with the lowest value at each Guess Index is the best Guess!</li>
+      </ul>
+        <p>
+          This demo draws inspiration from the Google AI Quickdraw game (<a href="https://quickdraw.withgoogle.com/">https://quickdraw.withgoogle.com/</a>) and uses the same "Object Guessing API" from the Google AI Quickdraw game.
+        </p>
+        <p>
+          The primary goals of this demo are (i) to highlight the fact that anyone can use the Google AI "Object Guessing API" and (ii) to visualize the full set of guess scores returned from the API in real-time.
+        </p>
+    </div>
+
+  </div>
+
+  <script src='js/paper-0.9.25.min.js'></script>
+  <script src='js/highcharts-5.0.4.min.js'></script>
+
+  <script src="js/drawing.js"></script>
+
+</body>
+</html>
