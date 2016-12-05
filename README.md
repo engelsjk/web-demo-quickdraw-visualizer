@@ -1,10 +1,14 @@
 # web-demo-quickdraw-visualizer
 
-Google recently launched a web tool called Quick Draw which asks you to draw an object then tries to guess that object using AI.
+TLDR: Google recently launched a web tool called Quick Draw which asks you to draw an object then tries to guess that object using a Neural Network AI. I "reverse-engineered" it and made my own drawing-guessing tool which leverages the same Google AI but adds some extra visualization.
+
+<img src="screenshots/screenshot_web-demo-quickdraw-visualizer.png" height="500px" width="auto">
+
+<h1>Summary></h1>
 
 <a href="https://quickdraw.withgoogle.com/">https://quickdraw.withgoogle.com/</a>
 
-Curious to know how this web tool worked, I set out to investigate the client-server interactions which allow drawing and guessing. This investigation consists of four parts:
+Curious to know how the Google Quick Draw web tool worked, I set out to investigate the client-server interactions which allow drawing and guessing. This investigation consists of four parts:
 
 <ol>
 <li>How Does Quick Draw Actually Work?</li>
@@ -28,7 +32,7 @@ The most important part of these POST requests is the data payload itself, which
 
 <img src="screenshots/screenshot_quickdraw-google-3.png" height="500px" width="auto">
 
-<b>IMPORTANT: This "ink" array is obviously the data behind canvas drawing in some format. It took a bit of trial-and-error, but I eventually figured out that the ink array includes values for X,Y as well as time in the following format:</b> 
+<b>IMPORTANT: This "ink" array is obviously the data behind the canvas drawing in some format. It took a bit of trial-and-error, but I eventually figured out that the ink array includes values for X,Y as well as time in the following format:</b> 
 
 <code>ink=[[x1, x2, ...],[y1, y2, ...],[t1, t1, ...]]</code>
 
@@ -54,6 +58,14 @@ This will bring up a separate console window and will start outputting web reque
 
 Unfortunately, I failed to realize that the chrome.webRequest API does not allow access to response body data, which is where the Google AI API guessing results are contained. This threw a wrench into my plan because without that data in the Chrome Extension background, I obviously wouldn't be able to visualize it the way I wanted.
 
+REFERENCES
+<ul>
+<li><a href"https://robots.thoughtbot.com/how-to-make-a-chrome-extension">https://robots.thoughtbot.com/how-to-make-a-chrome-extension</a></li>
+<li><a href="https://developer.chrome.com/extensions/webRequest">https://developer.chrome.com/extensions/webRequest</a></li>
+<li><a href="http://stackoverflow.com/questions/15502691/chrome-webrequest-not-working">http://stackoverflow.com/questions/15502691/chrome-webrequest-not-working</a></li>
+<li><a href="http://stackoverflow.com/questions/10257301/where-to-read-console-messages-from-background-js-in-a-chrome-extension">http://stackoverflow.com/questions/10257301/where-to-read-console-messages-from-background-js-in-a-chrome-extension</a></li>
+</ul>
+
 <h1>Python</h1>
 
 Realizing that I couldn't access the Google AI guessing results via a Chrome Extension, I was still curious to figure out a way to visualize the results more than what is shown on the Quick Draw web tool. Having played around with the HTTP request/response data, I wondered if that Google AI API would be accessible from something other than the Quick Draw web tool itself.
@@ -66,4 +78,15 @@ It worked!
 
 <img src="screenshots/screenshot_python-test-quickdraw-api.png" height="400px" width="auto">
 
-Now, maybe this shouldn't have come as a surprise to me but it was an exciting realization non-the-less.
+Now, maybe this shouldn't have come as a surprise to me but it was an exciting realization nonetheless. Knowing that I can use the Google AI API outside of the Quick Draw web tool, I decided to make my own version...
+
+<h1>Quick Draw Visualizer</h1>
+
+Having dug into the Google Quick Draw web tool, I knew that they were using <a href="http://paperjs.org/about/">Paper.js</a> as the canvas drawing framework. Figuring that was as good a place as any to start, I quickly found a basic Paper.js drawing app on Codepen.io to use as a starting point.
+
+The first trick to figure out was how to generate the 3-vector "ink" array for the API data payload. It was simple enough to create a mouse-drag event listener which built up the XY coordinates from the canvas element, but the time array was the tricky part. I decided to do
+
+REFERENCES
+<ul>
+<li><a href="https://codepen.io/anon/pen/ObmQmB">https://codepen.io/anon/pen/ObmQmB</a></li>
+</ul>
