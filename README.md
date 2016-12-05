@@ -52,7 +52,7 @@ Having played around with Chrome Extensions before (), I knew enough to be dange
 
 To see the <code>console.log</code>'d output of a Background Page, you need to Inspect View of the Background Page in the Chrome Extensions manager (<a href="chrome://extensions/">chrome://extensions/</a>). 
 
-<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-1.png" height="275px" width="auto">
+<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-1.png" height="200px" width="auto">
 
 This will bring up a separate console window and will start outputting web request data as you use the Quick Draw web tool.
 
