@@ -46,11 +46,11 @@ Having played around with Chrome Extensions before (), I knew enough to be dange
 
 To see the <code>console.log</code>'d output of a Background Page, you need to Inspect View of the Background Page in the Chrome Extensions manager (<a href="chrome://extensions/">chrome://extensions/</a>). 
 
-<img src="screenshots/screenshot_chrome-extension-quickdraw-1.png" height="500px">
+<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-1.png" height="500px">
 
 This will bring up a separate console window and will start outputting web request data as you use the Quick Draw web tool.
 
-<img src="screenshots/screenshot_chrome-extension-quickdraw-2.png" height="500px">
+<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-2.png" height="500px">
 
 Unfortunately, I failed to realize that the chrome.webRequest API does not allow access to response body data, which is where the Google AI API guessing results are contained. This threw a wrench into my plan because without that data in the Chrome Extension background, I obviously wouldn't be able to visualize it the way I wanted.
 
