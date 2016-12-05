@@ -16,17 +16,17 @@ Curious to know how this web tool worked, I set out to investigate the client-se
 <h1>Quick Draw</h1>
 First, I set out to look at the network calls of the Quick Draw web tool using the Chrome DevTools. When starting the Quick Draw page, it first asks you to draw an object which it will then try to guess.
 
-<img src="screenshots/screenshot_quickdraw-google-1.png" height="500px">
+<img src="screenshots/screenshot_quickdraw-google-1.png" height="500px" width="auto">
 
 As you draw, a lot of POST requests are sent to what appears to be an API endpoint at <i>inputtools.google.com</i>.
 
-<img src="screenshots/screenshot_quickdraw-google-2.png" height="500px">
+<img src="screenshots/screenshot_quickdraw-google-2.png" height="500px" width="auto">
 
 (You can also see an OPTION request for each POST request, but I ignored those for this investigation assuming that I wouldn't be able to interpret their intent from the client side.)
 
 The most important part of these POST requests is the data payload itself, which consists of a JSON string with two main components: (i) the drawing canvas width/height and (ii) an "ink" array that consists of three arrays of numbers.
 
-<img src="screenshots/screenshot_quickdraw-google-3.png" height="500px">
+<img src="screenshots/screenshot_quickdraw-google-3.png" height="500px" width="auto">
 
 <b>IMPORTANT: This "ink" array is obviously the data behind canvas drawing in some format. It took a bit of trial-and-error, but I eventually figured out that the ink array includes values for X,Y as well as time in the following format:</b> 
 
@@ -36,7 +36,7 @@ The most important part of these POST requests is the data payload itself, which
 
 The response to each of these POST requests is some JSON data that includes (i) the results of the drawing guesses and (ii) what appears to be some details about the Google AI engine (e.g. call and compute latency).   
 
-<img src="screenshots/screenshot_quickdraw-google-4.png" height="500px">
+<img src="screenshots/screenshot_quickdraw-google-4.png" height="500px" width="auto">
 
 <h1>Chrome Extension</h1>
 
@@ -46,11 +46,11 @@ Having played around with Chrome Extensions before (), I knew enough to be dange
 
 To see the <code>console.log</code>'d output of a Background Page, you need to Inspect View of the Background Page in the Chrome Extensions manager (<a href="chrome://extensions/">chrome://extensions/</a>). 
 
-<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-1.png" height="500px">
+<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-1.png" height="275px" width="auto">
 
 This will bring up a separate console window and will start outputting web request data as you use the Quick Draw web tool.
 
-<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-2.png" height="500px">
+<img src="screenshots/screenshot_chrome-extension-quickdraw-requests-2.png" height="500px" width="auto">
 
 Unfortunately, I failed to realize that the chrome.webRequest API does not allow access to response body data, which is where the Google AI API guessing results are contained. This threw a wrench into my plan because without that data in the Chrome Extension background, I obviously wouldn't be able to visualize it the way I wanted.
 
@@ -64,6 +64,6 @@ I manually recreated the structure of the cURL string into the necessary Request
 
 It worked! 
 
-<img src="screenshots/screenshot_python-test-quickdraw-api.png" height="500px">
+<img src="screenshots/screenshot_python-test-quickdraw-api.png" height="400px" width="auto">
 
 Now, maybe this shouldn't have come as a surprise to me but it was an exciting realization non-the-less.
