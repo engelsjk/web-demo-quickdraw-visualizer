@@ -8,8 +8,8 @@ Curious to know how this web tool worked, I set out to investigate the client-se
 
 <ol>
 <li>How Does Quick Draw Actually Work?</li>
-<li>Can I Make a Chrome Extension that Visualizes More of the Quick Draw Data?<li>
-<li>Can I Use the Google AI API from Python?<li>
+<li>Can I Make a Chrome Extension that Visualizes More of the Quick Draw Data?</li>
+<li>Can I Use the Google AI API from Python?</li>
 <li>Can I Make My Own Web Tool Using the Google AI API?</li>
 </ol>
 
