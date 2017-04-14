@@ -4,7 +4,7 @@ TLDR: Google recently launched a web tool called Quick Draw which asks you to dr
 
 <img src="screenshots/screenshot_web-demo-quickdraw-visualizer.png" height="500px" width="auto">
 
-To check out the drawing tool, open the <code>web-demo-quickdraw-visualizer/index.html</code> in a browser and start drawing! You'll quickly see a plot of "guesses" of what object you're drawing and their relative fit scores, all provided by the Google AI behind the Google Quick Draw tool.
+To check out the drawing tool, go to <a href="https://engelsjk.github.io/web-demo-quickdraw-visualizer/">https://engelsjk.github.io/web-demo-quickdraw-visualizer/</a> and start drawing! You'll quickly see a plot of "guesses" of what object you're drawing and their relative fit scores, all provided by the Google AI behind the Google Quick Draw tool.
 
 <h1>Summary></h1>
 
