@@ -62,9 +62,12 @@ This will bring up a separate console window and will start outputting web reque
 
 Unfortunately, I failed to realize that the chrome.webRequest API does not allow access to response body data, which is where the Google AI API guessing results are contained. This threw a wrench into my plan because without that data in the Chrome Extension background, I obviously wouldn't be able to visualize it the way I wanted.
 
+***Repository for Chrome Extension***
+<a href="https://github.com/engelsjk/chrome-extension-quickdraw-requests">https://github.com/engelsjk/chrome-extension-quickdraw-requests</a>
+
 <i>References</i>
 <ul>
-<li><a href"https://robots.thoughtbot.com/how-to-make-a-chrome-extension">https://robots.thoughtbot.com/how-to-make-a-chrome-extension</a></li>
+<li><a href="https://robots.thoughtbot.com/how-to-make-a-chrome-extension">https://robots.thoughtbot.com/how-to-make-a-chrome-extension</a></li>
 <li><a href="https://developer.chrome.com/extensions/webRequest">https://developer.chrome.com/extensions/webRequest</a></li>
 <li><a href="http://stackoverflow.com/questions/15502691/chrome-webrequest-not-working">http://stackoverflow.com/questions/15502691/chrome-webrequest-not-working</a></li>
 <li><a href="http://stackoverflow.com/questions/10257301/where-to-read-console-messages-from-background-js-in-a-chrome-extension">http://stackoverflow.com/questions/10257301/where-to-read-console-messages-from-background-js-in-a-chrome-extension</a></li>
@@ -83,6 +86,9 @@ It worked!
 <img src="screenshots/screenshot_python-test-quickdraw-api.png" height="400px" width="auto">
 
 Now, maybe this shouldn't have come as a surprise to me but it was an exciting realization nonetheless. Knowing that I can use the Google AI API outside of the Quick Draw web tool, I decided to make my own version...
+
+***Repository for Chrome Extension***
+<a href="https://github.com/engelsjk/python-test-googledraw-api">https://github.com/engelsjk/python-test-googledraw-api</a>
 
 <h1>Quick Draw Visualizer</h1>
 
